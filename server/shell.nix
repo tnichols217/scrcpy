@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {config.android_sdk.accept_license = true;} }:
 
 let
-  androidSdk = pkgs.androidenv.androidPkgs_9_0.androidsdk;
+  androidSdk = pkgs.androidenv.androidPkgs.androidsdk;
 in
 pkgs.mkShell {
   buildInputs = with pkgs; [
