@@ -28,6 +28,7 @@
           src = ./.;
           lockFile = ./gradle.lock;
           extraGradleFlags = [ "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2" ];
+          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
           # gradleInstallFlags = [ "installDist" ];
         };
         default = scrcpy;
