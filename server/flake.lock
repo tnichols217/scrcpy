@@ -18,6 +18,43 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1605370193,
+        "narHash": "sha256-YyMTf3URDL/otKdKgtoMChu4vfVL3vCMkRqpGifhUn0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5021eac20303a61fafe17224c087f5519baed54d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "gradle2nix": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1725751759,
+        "narHash": "sha256-DfnN9hWcrb5WbNZNJg2KtTEGd/SCoZFkFdCHMeglN/w=",
+        "owner": "tnichols217",
+        "repo": "gradle2nix",
+        "rev": "40ca409ca69d9f8b59ea623c43f936724212e8fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tnichols217",
+        "ref": "v2",
+        "repo": "gradle2nix",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1725534445,
@@ -37,6 +74,7 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
+        "gradle2nix": "gradle2nix",
         "nixpkgs": "nixpkgs"
       }
     },

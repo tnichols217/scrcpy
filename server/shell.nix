@@ -1,8 +1,5 @@
-{ pkgs ? import <nixpkgs> {config.android_sdk.accept_license = true;} }:
+{ pkgs ? import <nixpkgs> {config.android_sdk.accept_license = true;}, androidSdk ? pkgs.androidenv.androidPkgs.androidsdk }:
 
-let
-  androidSdk = pkgs.androidenv.androidPkgs.androidsdk;
-in
 pkgs.mkShell {
   buildInputs = with pkgs; [
     androidSdk
@@ -12,5 +9,5 @@ pkgs.mkShell {
 
   ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
   # override the aapt2 that gradle uses with the nix-shipped version
-  GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/28.0.3/aapt2";
+  GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2";
 }
