@@ -69,7 +69,7 @@
 
           ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
           # Override the aapt2 that gradle uses with the nix-shipped version
-          GRADLE_OPTS = pkgs.lib.strings.concatStringsSep extraGradleFlags;
+          GRADLE_OPTS = pkgs.lib.strings.concatStringsSep " " extraGradleFlags;
           UPDATE_LOCK = ''nix run github:tnichols217/gradle2nix/v2 -- -t :server:build -- $GRADLE_OPTS'';
         };
         default = gradle;
