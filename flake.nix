@@ -41,28 +41,37 @@
         includeExtras = ["extras;google;gcm"];
       };
       androidSdk = androidPackages.androidsdk;
+      extraGradleFlags = [ "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2" ];
     in {
       packages = rec {
         scrcpy = inputs.gradle2nix.builders.${system}.buildGradlePackage {
+          inherit extraGradleFlags;
           pname = "scrcpy";
           version = "1.0";
-          src = ./.;
+          src = ./.; # fetch from github
           lockFile = ./gradle.lock;
-          extraGradleFlags = [ "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2" ];
-          preBuild = ''env'';
           ANDROID_SDK_ROOT="${androidSdk}/libexec/android-sdk";
-          ANDROID_HOME="${androidSdk}/libexec/android-sdk";
-          
           nativeBuildInputs = with pkgs; [
             androidSdk
             glibc
           ];
-          # gradleInstallFlags = [ "installDist" ];
+          installPhase = ''mkdir -p $out; cp -r server/build/outputs/apk/*/*.apk $out'';
         };
         default = scrcpy;
       };
       devShells = rec {
-        gradle = pkgs.callPackage ./shell.nix {inherit androidSdk;};
+        gradle = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            androidSdk
+            glibc
+            gradle
+          ];
+
+          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+          # Override the aapt2 that gradle uses with the nix-shipped version
+          GRADLE_OPTS = pkgs.lib.strings.concatStringsSep extraGradleFlags;
+          UPDATE_LOCK = ''nix run github:tnichols217/gradle2nix/v2 -- -t :server:build -- $GRADLE_OPTS'';
+        };
         default = gradle;
       };
     });
