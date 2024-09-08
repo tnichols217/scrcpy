@@ -48,8 +48,15 @@
           version = "1.0";
           src = ./.;
           lockFile = ./gradle.lock;
-          extraGradleFlags = ["-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2"];
-          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+          extraGradleFlags = [ "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2" ];
+          preBuild = ''env'';
+          ANDROID_SDK_ROOT="${androidSdk}/libexec/android-sdk";
+          ANDROID_HOME="${androidSdk}/libexec/android-sdk";
+          
+          nativeBuildInputs = with pkgs; [
+            androidSdk
+            glibc
+          ];
           # gradleInstallFlags = [ "installDist" ];
         };
         default = scrcpy;

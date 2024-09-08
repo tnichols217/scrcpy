@@ -10,4 +10,5 @@ pkgs.mkShell {
   ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
   # override the aapt2 that gradle uses with the nix-shipped version
   GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/34.0.0/aapt2";
+  UPDATE_LOCK = ''nix run github:tnichols217/gradle2nix/v2 -- -t :server:build -- $GRADLE_OPTS'';
 }
